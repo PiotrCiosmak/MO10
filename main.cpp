@@ -28,7 +28,7 @@ double directEulerMethod(double step)
 
 double indirectEulerMethod(double step)
 {
-    double exactValue, fraction, error = 0.0, t = step, y = 0.0;//warunek poczatkowy y(0) = 0
+    double exactValue, fraction, error{}, t{step}, y{};//warunek poczatkowy y(0) = 0
 
     for (int i = 0; i < N; ++i)
     {
@@ -44,7 +44,7 @@ double indirectEulerMethod(double step)
 
 double trapezoidalMethod(double step)
 {
-    double exactValue, fractionN, fractionNPlus, error = 0.0, t = step, y = 0.0;//warunek poczatkowy y(0) = 0
+    double exactValue, fractionN, fractionNPlus, error{}, t{step}, y{};//warunek poczatkowy y(0) = 0
 
     for (int i = 0; i < N; ++i)
     {
@@ -62,7 +62,7 @@ double trapezoidalMethod(double step)
 
 double directEulerMethodGraph(double step, double tmax)
 {
-    double y = 0.0; //warunek poczatkowy y(0) = 0
+    double y{}; //warunek poczatkowy y(0) = 0
 
     for (double i = 0.0; i < tmax; i += step)
         y = y + step * (-((10.0 * i * i + 20.0) / (i * i + 1.0)) * (y - 1.0));
@@ -71,7 +71,7 @@ double directEulerMethodGraph(double step, double tmax)
 
 double indirectEulerMethodGraph(double step, double tmax)
 {
-    double fraction, y = 0.0; //warunek poczatkowy y(0) = 0
+    double fraction, y{}; //warunek poczatkowy y(0) = 0
 
     for (double i = 0.0; i < tmax; i += step)
     {
@@ -83,7 +83,7 @@ double indirectEulerMethodGraph(double step, double tmax)
 
 double trapezoidalMethodGraph(double step, double tmax)
 {
-    double fractionN, fractionNPlus, y = 0.0; //warunek poczatkowy y(0) = 0
+    double fractionN, fractionNPlus, y{}; //warunek poczatkowy y(0) = 0
 
     for (double i = 0.0; i < tmax; i += step)
     {
@@ -115,11 +115,11 @@ int main()
     fstream trapezoidalMethod("trapezoidalMethod.txt", fstream::out);
     for (double t = 0; t < 5; t += 0.01)
     {
-        anl = analyticalFormula(t);
-        mpe = indirectEulerMethodGraph(0.01, t);
-        mt = trapezoidalMethodGraph(0.01, t);
-        mbe_s = directEulerMethodGraph(0.01, t);
-        //dane_1 << t << " " << anl << " " << mpe << " " << mt << " " << mbe_s << endl;
+        double exactValue{analyticalFormula(t)};
+
+        directEulerMethodStable <<exactValue<<" "<<directEulerMethodGraph(0.01, t);
+        indirectEulerMethod <<exactValue<<" "<<indirectEulerMethodGraph(0.01, t);
+        trapezoidalMethod <<exactValue<<" "<<trapezoidalMethodGraph(0.01, t);
     }
     directEulerMethodStable.close();
     indirectEulerMethod.close();
