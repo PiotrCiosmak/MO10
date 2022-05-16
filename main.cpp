@@ -101,15 +101,16 @@ int main()
     fstream trapezoidalMethodErrors("trapezoidalMethodErrors.txt", fstream::out);
     for (double step = 0.1; step > 1e-20; step /= 2)
     {
-        directEulerMethodErrors << log10(step) << "," << log10(directEulerMethod(step)) << endl;
-        indirectEulerMethodErrors << log10(step) << "," << log10(indirectEulerMethod(step)) << endl;
-        trapezoidalMethodErrors << log10(step) << "," << log10(trapezoidalMethod(step)) << endl;
+        directEulerMethodErrors << log10(step) << " " << log10(directEulerMethod(step)) << endl;
+        indirectEulerMethodErrors << log10(step) << " " << log10(indirectEulerMethod(step)) << endl;
+        trapezoidalMethodErrors << log10(step) << " " << log10(trapezoidalMethod(step)) << endl;
     }
     directEulerMethodErrors.close();
     indirectEulerMethodErrors.close();
     trapezoidalMethodErrors.close();
 
 
+    fstream exactValueFile("exactValue.txt", fstream::out);
     fstream directEulerMethodStable("directEulerMethodStable.txt", fstream::out);
     fstream indirectEulerMethod("indirectEulerMethod.txt", fstream::out);
     fstream trapezoidalMethod("trapezoidalMethod.txt", fstream::out);
@@ -117,10 +118,12 @@ int main()
     {
         double exactValue{analyticalFormula(t)};
 
-        directEulerMethodStable <<exactValue<<" "<<directEulerMethodGraph(0.01, t);
-        indirectEulerMethod <<exactValue<<" "<<indirectEulerMethodGraph(0.01, t);
-        trapezoidalMethod <<exactValue<<" "<<trapezoidalMethodGraph(0.01, t);
+        exactValueFile << exactValue << " " << exactValue << endl;
+        directEulerMethodStable << exactValue << " " << directEulerMethodGraph(0.01, t) << endl;
+        indirectEulerMethod << exactValue << " " << indirectEulerMethodGraph(0.01, t) << endl;
+        trapezoidalMethod << exactValue << " " << trapezoidalMethodGraph(0.01, t) << endl;
     }
+    exactValueFile.close();
     directEulerMethodStable.close();
     indirectEulerMethod.close();
     trapezoidalMethod.close();
